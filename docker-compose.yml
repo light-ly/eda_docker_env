@@ -1,0 +1,15 @@
+services:
+  centos-eda-env:
+    image: centos-eda-env:latest
+    container_name: eda-env-container
+    environment:
+      - DISPLAY=${DISPLAY}  # 环境变量 DISPLAY 从宿主机传递给容器
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw  # 映射 X11 显示目录
+      - /opt:/opt  # 映射 /opt 目录
+      - /home:/home  # 映射 /home 目录
+    network_mode: host  # 使用宿主机网络
+    stdin_open: true  # 保持标准输入打开，类似 -it
+    tty: true  # 允许容器分配伪终端，类似 -it
+    entrypoint: ["/bin/bash", "-l"]  # 指定启动命令为 /bin/bash -l
+    restart: always
